@@ -73,7 +73,7 @@
         database = firebase.database();
         function shares(){
         database.ref("/Links/link").on('value',function(data){
-            links = 'whatsapp://send?text=Challenge Your Knowledge about India by taking this quiz: '+data.val();
+            links = 'whatsapp://send?text=Challenge Your Knowledge about Janmashtami by taking this quiz: '+data.val();
             window.open(links)
         })
     }
