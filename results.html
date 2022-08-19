@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Janmashtami Quiz</title>
+    <link rel="icon" type="image/x-icon" href="handi.png">
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+    
+    
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+  apiKey: "AIzaSyDm2MPNkK55QxOxO9cgDbyaPDyvvy6UGfU",
+  authDomain: "janmashtami-ef94f.firebaseapp.com",
+  projectId: "janmashtami-ef94f",
+  storageBucket: "janmashtami-ef94f.appspot.com",
+  messagingSenderId: "385544798730",
+  appId: "1:385544798730:web:37bf3e50c8631218da55f3"
+};
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+<body>
+
+    
+<div style="display:block">
+    <center>
+<h1 >You Got</h1> <br>
+<h1 id="score" style="font-size: 50px;"></h1>
+<h2 id="Quest"></h2>
+<h2 id="Time"></h2>
+<br>
+<h3 id="Text"></h3>
+
+
+<br>
+<h2>Challenge Your Friends !</h2>
+<div style="text-align: center;background: rgba(0, 0, 0, 0.5);padding: 10px;width: 50%;margin-top: 10px;" onclick="shares()">
+<h3>WhatsApp</h3>
+<img style="margin-top: 10px;" width="50" src="https://cdn2.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-whatsapp-circle-512.png" alt="">
+</a></div>
+</div>
+<script src="hyperes.js"></script>
+    <script src="confetti.js"></script>
+    <!-- Confetti  JS-->
+    <script>
+
+        // start
+
+        const start = () => {
+            setTimeout(function() {
+                confetti.start()
+            }, 1000); // 1000 is time that after 1 second start the confetti ( 1000 = 1 sec)
+        };
+
+        //  Stop
+
+        const stop = () => {
+            setTimeout(function() {
+                confetti.stop()
+            }, 5000); // 5000 is time that after 5 second stop the confetti ( 5000 = 5 sec)
+        };
+
+        start();
+        stop();
+    </script>
+    <script>
+        database = firebase.database();
+        function shares(){
+        database.ref("/Links/link").on('value',function(data){
+            links = 'whatsapp://send?text=Challenge Your Knowledge about India by taking this quiz: '+data.val();
+            window.open(links)
+        })
+    }
+    </script>
+</body>
+</html>
