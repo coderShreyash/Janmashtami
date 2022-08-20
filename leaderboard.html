@@ -9,7 +9,7 @@
     <link rel="icon" type="image/x-icon" href="handi.png">
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
     <script>
         // Your web app's Firebase configuration
@@ -25,14 +25,15 @@
         firebase.initializeApp(firebaseConfig);
     </script>
     <style>
-        body{
+        body {
             height: 100vh;
             background: url("https://img.freepik.com/free-vector/luxury-ornamental-mandala-design-background_1159-6794.jpg");
-    background-size: cover;
-    margin: 0;
+            background-size: cover;
+            margin: 0;
         }
+
         #container {
-            
+
             display: none;
             text-align: center;
             flex-direction: column;
@@ -44,6 +45,7 @@
             margin-top: -20px;
             color: white;
             z-index: -1;
+            padding-bottom: 75px;
 
         }
 
@@ -60,11 +62,13 @@
             border: 2px solid black;
 
         }
-        #ns{
-            height:10vw;
-            width:87.5vw;
+
+        #ns {
+            height: 10vw;
+            width: 87.5vw;
             font-size: larger;
         }
+
         .nameS {
             display: flex;
             justify-content: space-around;
@@ -74,20 +78,38 @@
             margin-top: 5px;
             margin-bottom: 5px;
         }
-        #container:nth-child(4){
-            
+
+        #container:nth-child(4) {
+
             background-color: gold;
         }
-        #container:nth-child(5){
+
+        #container:nth-child(5) {
             background-color: silver;
         }
-        #container:nth-child(6){
+
+        #container:nth-child(6) {
             background-color: brown;
         }
-        table {
-  border: 2px solid black;
-}
 
+        table {
+            border: 2px solid black;
+        }
+
+        .sc {
+            background: green;
+            align-items: center;
+            height: 50px;
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            right: 10px;
+            padding-left: 10px;
+            bottom: 10px;
+            width: 90vw;
+            visibility: hidden;
+        }
+        
     </style>
 </head>
 
@@ -97,7 +119,7 @@
         style="position:absolute;width:100%;height:100%;background: url('https://i.pinimg.com/originals/3d/a1/c2/3da1c204207bec1124d5a7c8f945346f.gif');background-size: cover;background-position: center;">
 
     </div>
-    <table id="container" >
+    <table id="container">
         <caption style="background:yellow;font-size: xx-large;text-shadow:1px 1px 2px black,-1px -1px 2px black;">
             🏆 Leaderboard 🏆
 
@@ -116,7 +138,11 @@
         </th>
 
     </table>
-
+    <div class="sc" id="sc" onclick="sct()">
+        <h2 style="color: white;">Take Screenshot</h2>
+        <img style="width:100px;height:50px;"
+            src="https://i.pinimg.com/originals/30/72/92/3072927ba0d6a6254719df9a97df48c4.png" alt="">
+    </div>
     <script>
 
         database = firebase.database();
@@ -142,27 +168,31 @@
 
         setTimeout(function () {
             sortingHat()
+
             document.getElementById("load").style.display = 'none';
+            document.getElementById("sc").style.visibility = 'visible';
+
             document.getElementById("container").style.display = 'flex';
 
-            document.querySelector('#container :nth-child(3)').style.background="gold";
-            document.querySelector('#container :nth-child(3)').style.fontSize="25px";
+            document.querySelector('#container :nth-child(3)').style.background = "gold";
+            document.querySelector('#container :nth-child(3)').style.fontSize = "25px";
 
-            document.querySelector('#container :nth-child(4)').style.background="silver";
-            document.querySelector('#container :nth-child(4)').style.fontSize="23px";
+            document.querySelector('#container :nth-child(4)').style.background = "silver";
+            document.querySelector('#container :nth-child(4)').style.fontSize = "23px";
 
-            document.querySelector('#container :nth-child(5)').style.background="brown";
-            document.querySelector('#container :nth-child(5)').style.fontSize="21px";
+            document.querySelector('#container :nth-child(5)').style.background = "brown";
+            document.querySelector('#container :nth-child(5)').style.fontSize = "21px";
 
             let numb = document.getElementById("container").children.length;
 
-            for(i=3;i<=numb;i++){
-            document.querySelector(`#container :nth-child(${i})`).innerHTML =  (i-2)+". " +document.querySelector(`#container :nth-child(${i})`).innerHTML
+            for (i = 3; i <= numb; i++) {
+                document.querySelector(`#container :nth-child(${i})`).innerHTML = (i - 2) + ". " + document.querySelector(`#container :nth-child(${i})`).innerHTML
 
             }
-        
+
         }, 5000)
-     
+
+
         function sortingHat() {
 
             let elements = []
@@ -179,17 +209,31 @@
 
         }
         function sortingHat2(e) {
-	let searched = document.getElementById("ns").value;
-  if (searched.trim() !== "") {
-  	let text = document.getElementById("container").innerHTML.replaceAll("<mark>","");
-        text=text.replaceAll("</mark>","");
-  	let re = new RegExp(searched.trim(),"g"); // search for all instances
+            let searched = document.getElementById("ns").value;
+            if (searched.trim() !== "") {
+                let text = document.getElementById("container").innerHTML.replaceAll("<mark>", "");
+                text = text.replaceAll("</mark>", "");
+                let re = new RegExp(searched.trim(), "g"); // search for all instances
 
-		let newText = text.replace(re, `<mark>${searched.trim()}</mark>`);
-		document.getElementById("container").innerHTML = newText;
-        document.getElementById("ns").value=searched
-  }
-}
+                let newText = text.replace(re, `<mark>${searched.trim()}</mark>`);
+                document.getElementById("container").innerHTML = newText+"<br><br><br>";
+                document.getElementById("ns").value = searched
+            }
+        }
+        function sct() {
+            html2canvas(document.querySelector("#container"), {
+                onrendered: function (canvas) {
+                    var img = canvas.toDataURL();
+    const fileName = img.split('/').pop();
+	var el = document.createElement("a");
+	el.setAttribute("href", img);
+	el.setAttribute("download", fileName);
+	document.body.appendChild(el);
+ 	el.click();
+	el.remove();
+                }
+            });
+        }
     </script>
 </body>
 
