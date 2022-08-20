@@ -30,17 +30,18 @@
     
 <div style="display:block">
     <center>
-<h1 >You Got</h1> <br>
-<h1 id="score" style="font-size: 50px;"></h1>
+        <br>
+<h1 >You Got</h1> 
+<h1 id="score" style="font-size: 50px;margin-top: 10px;"></h1>
 <h2 id="Quest"></h2>
 <h2 id="Time"></h2>
-<br>
-<h3 id="Text"></h3>
 
+<h3 style="margin-top: 5px;" id="Text"></h3>
 
-<br>
-<h2>Challenge Your Friends !</h2>
-<div style="text-align: center;background: rgba(0, 0, 0, 0.5);padding: 10px;width: 50%;margin-top: 10px;" onclick="shares()">
+<button style="margin-top:15px;background-color: rgb(2, 152, 198);color:white;font-size:30px;padding: 5px;padding-left:10px;padding-right:10px;border-radius:20px;border-color: aliceblue;" onclick="startq()">See Leaderboard</button>
+
+<h2 style="margin-top:15px">Challenge Your Friends !</h2>
+<div style="text-align: center;background: rgba(0, 0, 0, 0.5);padding: 10px;width: 50%;margin-top: 0px;" onclick="shares()">
 <h3>WhatsApp</h3>
 <img style="margin-top: 10px;" width="50" src="https://cdn2.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-whatsapp-circle-512.png" alt="">
 </a></div>
@@ -73,9 +74,13 @@
         database = firebase.database();
         function shares(){
         database.ref("/Links/link").on('value',function(data){
-                        links = 'whatsapp://send?text=I got '+localStorage.getItem("Scorer") +' points, can you score better ? Challenge Your Knowledge about Janmashtami by taking this quiz: '+data.val();
+            links = 'whatsapp://send?text=I got '+localStorage.getItem("Scorer") +' points, can you score better ? Challenge Your Knowledge about Janmashtami by taking this quiz: '+data.val();
             window.open(links)
         })
+
+    }
+    function startq(){
+        window.open("leaderboard.html");
     }
     </script>
 </body>
